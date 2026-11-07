@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>نبرد کهکشانی | بازی آنلاین فضایی رایگان</title>
+<meta name="description" content="نبرد کهکشانی یک بازی فضایی آنلاین و رایگان است. با سفینه‌ات از دشمنان فرار کن، با باس‌ها بجنگ و رکورد بزن. بدون نصب، روی موبایل و کامپیوتر.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0d0b2b">
+<meta property="og:type" content="website">
+<meta property="og:title" content="نبرد کهکشانی | بازی آنلاین فضایی رایگان">
+<meta property="og:description" content="شوتر فضایی سریع با باس، پاور‌آپ و رکورد. همین الان بازی کن.">
+<meta name="twitter:card" content="summary">
+<!-- بعد از آپلود روی دامنه‌ی خودت این خط را فعال کن:
+<link rel="canonical" href="https://YOUR-DOMAIN/">
+<meta property="og:url" content="https://YOUR-DOMAIN/"> -->
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"نبرد کهکشانی","description":"بازی شوتر فضایی آنلاین و رایگان با باس و پاور‌آپ","genre":"Shooter","inLanguage":"fa","applicationCategory":"Game","operatingSystem":"Any (Web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;800&display=swap">
+<style>
+:root{--bg:#eceaf7;--fg:#1b1850;--card:#fff;--muted:#5b5894;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d0b2b;--fg:#f1efff;--card:#17144a;--muted:#a9a6e0;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d0b2b;--fg:#f1efff;--card:#17144a;--muted:#a9a6e0;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg);color:var(--fg);font-family:"Vazirmatn",Tahoma,sans-serif;display:flex;flex-direction:column;align-items:center;gap:12px;padding:12px}
+.hud{width:min(100%,400px);display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:1.05rem}
+.hud span small{display:block;font-weight:400;color:var(--muted);font-size:.75rem}
+.stage{position:relative;width:min(100%,400px);aspect-ratio:400/600;border-radius:18px;overflow:hidden;background:#0d0b2b;box-shadow:0 10px 40px rgba(60,40,200,.35);touch-action:none;user-select:none}
+canvas{width:100%;height:100%;display:block}
+.overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;background:rgba(13,11,43,.84);color:#f1efff;padding:24px}
+.overlay[hidden]{display:none}
+.overlay h1{margin:0;font-size:2.2rem;font-weight:800;color:#ffd166;text-shadow:0 0 24px rgba(255,209,102,.6)}
+.overlay p{margin:0;max-width:30ch;line-height:1.9;color:#cfcdf5}
+button{font:inherit;font-weight:800;font-size:1.1rem;padding:12px 34px;border:0;border-radius:999px;background:#4de1ff;color:#0d0b2b;cursor:pointer;box-shadow:0 0 24px rgba(77,225,255,.6)}
+button.mb{padding:4px 12px;font-size:1.1rem;background:var(--card);color:var(--fg);box-shadow:none}
+button:focus-visible{outline:3px solid #ffd166;outline-offset:3px}
+.info{width:min(100%,640px);line-height:2;color:var(--fg);padding:8px 4px 24px}
+.info h2{font-size:1.3rem;margin:12px 0 4px}.info h3{font-size:1.05rem;margin:16px 0 4px}
+.info p,.info li{color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="hud">
+  <span id="sc">۰<small>score</small></span>
+  <span id="lv">❤❤❤<small>life</small></span>
+  <span id="bs">۰<small>record</small></span>
+  <button class="mb" id="mu" aria-label="قطع و وصل صدا">🔊</button>
+</div>
+<div class="stage">
+  <canvas id="c" width="400" height="600"></canvas>
+  <div class="overlay" id="ov">
+    <h1 id="ttl"> space war</h1>
+    <p id="msg">سفینه را با انگشت، ماوس یا کلیدهای جهتی حرکت بده. شلیک خودکار است. باس‌ها را نابود کن و رکورد بزن.</p>
+    <button id="go">  Game</button>
+  </div>
+</div>
+<main class="info">
+  <h1 style="font-size:1.5rem;margin:8px 0">نبرد کهکشانی: بازی فضایی آنلاین و رایگان</h1>
+  <p>نبرد کهکشانی یک بازی شوتر فضایی سریع است که مستقیم در مرورگر اجرا می‌شود. نیازی به نصب نیست و روی موبایل، تبلت و کامپیوتر کار می‌کند. موج‌های دشمن را شکست بده، با باس‌های غول‌پیکر بجنگ و بالاترین امتیاز را ثبت کن.</p>
+  <h2>آموزش بازی</h2>
+  <ul>
+    <li>حرکت: لمس صفحه، ماوس یا کلیدهای جهتی</li>
+    <li>شلیک: خودکار است</li>
+    <li>گوی طلایی: تیر سه‌گانه برای ۶ ثانیه</li>
+    <li>گوی سبز: سپر که یک ضربه را جذب می‌کند</li>
+    <li>کمبو: هر ۵ نابودی پشت‌سرهم، ضریب امتیاز را بالاتر می‌برد</li>
+  </ul>
+</main>
+<script>
+const cv=document.getElementById('c'),ctx=cv.getContext('2d'),W=400,H=600;
+const fa=n=>Math.floor(n).toLocaleString('fa-IR',{useGrouping:false});
+let best=0;try{best=+localStorage.getItem('gbest')||0}catch(e){}
+document.getElementById('bs').firstChild.nodeValue=fa(best);
+const stars=Array.from({length:70},()=>({x:Math.random()*W,y:Math.random()*H,s:Math.random()*2+.5}));
+let S,tx=W/2,ty=500,keys={},last=0,run=false,mute=false,AC;
+function snd(f,d,type,v,sl){if(mute)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const t=AC.currentTime,o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.setValueAtTime(f,t);if(sl)o.frequency.exponentialRampToValueAtTime(sl,t+d);g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(AC.destination);o.start();o.stop(t+d)}catch(e){}}
+function reset(){S={x:W/2,y:500,b:[],e:[],eb:[],p:[],u:[],score:0,hp:3,fire:0,spawn:1,power:0,t:0,inv:0,sh:false,cmb:0,cd:0,shake:0,nb:500,bn:0,boss:null,msg:'',mt:0}}
+function burst(x,y,col,n){for(let i=0;i<(n||14);i++){const a=Math.random()*6.28,v=Math.random()*200+40;S.p.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:.7,c:col})}}
+function hud(){document.getElementById('sc').firstChild.nodeValue=fa(S.score);document.getElementById('lv').firstChild.nodeValue=('❤'.repeat(Math.max(S.hp,0))||'—')+(S.sh?'🛡':'');}
+function over(){
+  run=false;if(S.score>best){best=Math.floor(S.score);try{localStorage.setItem('gbest',best)}catch(e){}}
+  document.getElementById('bs').firstChild.nodeValue=fa(best);
+  document.getElementById('ttl').textContent='سفینه منفجر شد';
+  document.getElementById('msg').textContent='امتیاز تو: '+fa(S.score)+(S.score>=best?' (رکورد جدید!)':'');
+  document.getElementById('go').textContent='دوباره';
+  document.getElementById('ov').hidden=false;
+}
+function hurt(){
+  if(S.inv>0)return;S.inv=1.2;S.shake=.5;
+  if(S.sh){S.sh=false;burst(S.x,S.y,'#7dffb0',20);snd(300,.2,'sine',.08,80);return}
+  S.hp--;S.cmb=0;burst(S.x,S.y,'#4de1ff',24);snd(160,.35,'sawtooth',.1,40);
+  if(S.hp<=0){hud();over()}
+}
+function kill(e){
+  e.dead=1;const m=1+Math.min(4,Math.floor(S.cmb/5));S.cmb++;S.cd=2;
+  S.score+=(e.boss?300:e.tank?50:10)*m;
+  burst(e.x,e.y,e.boss?'#b388ff':e.tank?'#ffd166':'#ff6b8a',e.boss?70:e.tank?30:16);
+  snd(e.boss?90:200,e.boss?.8:.18,'sawtooth',.07,40);
+  if(e.boss){S.shake=1;S.boss=null;S.hp=Math.min(5,S.hp+1);S.u.push({x:e.x-30,y:e.y,k:'s'},{x:e.x+30,y:e.y,k:'p'});S.msg='باس نابود شد! یک جان گرفتی';S.mt=2.5}
+  else if(Math.random()<(e.tank?.45:.06))S.u.push({x:e.x,y:e.y,k:Math.random()<.5?'p':'s'});
+}
+function step(dt){
+  S.t+=dt;S.cd-=dt;if(S.cd<=0)S.cmb=0;S.shake=Math.max(0,S.shake-dt*2);S.mt-=dt;
+  if(keys.ArrowLeft)tx-=380*dt;if(keys.ArrowRight)tx+=380*dt;if(keys.ArrowUp)ty-=380*dt;if(keys.ArrowDown)ty+=380*dt;
+  tx=Math.min(W-20,Math.max(20,tx));ty=Math.min(H-30,Math.max(300,ty));
+  S.x+=(tx-S.x)*Math.min(1,dt*14);S.y+=(ty-S.y)*Math.min(1,dt*14);
+  S.fire-=dt;S.power-=dt;S.inv-=dt;
+  if(S.fire<=0){S.fire=.2;(S.power>0?[-.25,0,.25]:[0]).forEach(d=>S.b.push({x:S.x,y:S.y-18,vx:d*400,vy:-560}));snd(880,.05,'square',.012)}
+  S.spawn-=dt;
+  if(S.spawn<=0){const lvl=1+S.score/600;S.spawn=Math.max(.28,1-lvl*.08)*(S.boss?2.2:1);const tank=Math.random()<.18;
+    S.e.push({x:30+Math.random()*(W-60),y:-30,r:tank?26:15,hp:tank?4:1,v:(tank?60:90)+Math.random()*40+lvl*10,ph:Math.random()*6,tank})}
+  if(!S.boss&&S.score>=S.nb){S.bn++;S.nb=S.score+700+S.bn*200;const hp=30+S.bn*12;
+    S.boss={x:W/2,y:-70,r:44,hp,max:hp,boss:1,sh:1.2};S.e.push(S.boss);S.msg='هشدار! باس نزدیک می‌شود';S.mt=2.5;snd(110,.6,'sawtooth',.08,60)}
+  S.b.forEach(b=>{b.x+=b.vx*dt;b.y+=b.vy*dt});S.b=S.b.filter(b=>b.y>-20);
+  S.eb.forEach(b=>{b.x+=b.vx*dt;b.y+=b.vy*dt});
+  S.e.forEach(e=>{
+    if(e.boss){e.y=Math.min(110,e.y+60*dt);e.x=W/2+Math.sin(S.t*.9)*130;e.sh-=dt;
+      if(e.sh<=0&&e.y>=110){e.sh=Math.max(.7,1.4-S.bn*.1);const n=3+Math.min(4,S.bn);
+        for(let i=0;i<n;i++){const a=1.57+(i-(n-1)/2)*.28;S.eb.push({x:e.x,y:e.y+30,vx:Math.cos(a)*190,vy:Math.sin(a)*190})}snd(260,.15,'square',.03,120)}
+    }else{e.y+=e.v*dt;e.x+=Math.sin(S.t*2+e.ph)*40*dt}
+  });
+  S.u.forEach(u=>u.y+=110*dt);
+  for(const e of S.e){
+    for(const b of S.b){if(!b.d&&Math.hypot(e.x-b.x,e.y-b.y)<e.r+4){b.d=1;e.hp--;burst(b.x,b.y,'#fff',3);if(e.hp<=0&&!e.dead)kill(e)}}
+    if(!e.dead&&Math.hypot(e.x-S.x,e.y-S.y)<e.r+12){if(!e.boss){e.dead=1;burst(e.x,e.y,'#ff6b8a',12)}hurt()}
+    if(e.y>H+40){e.dead=1;S.score=Math.max(0,S.score-5)}
+  }
+  for(const b of S.eb){if(Math.hypot(b.x-S.x,b.y-S.y)<16){b.d=1;hurt()}}
+  S.b=S.b.filter(b=>!b.d);S.e=S.e.filter(e=>!e.dead);S.eb=S.eb.filter(b=>!b.d&&b.y<H+20&&b.x>-20&&b.x<W+20);
+  S.u=S.u.filter(u=>{if(Math.hypot(u.x-S.x,u.y-S.y)<26){if(u.k=='p')S.power=6;else S.sh=true;S.score+=20;snd(700,.2,'sine',.06,1200);return false}return u.y<H+20});
+  S.p.forEach(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;p.l-=dt});S.p=S.p.filter(p=>p.l>0);
+  if(run)hud();
+}
+function glow(c,b){ctx.shadowColor=c;ctx.shadowBlur=b;ctx.fillStyle=c}
+function neb(x,y,r,c){const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,c);g.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}
+function draw(dt){
+  ctx.shadowBlur=0;ctx.fillStyle='#0d0b2b';ctx.fillRect(0,0,W,H);
+  neb(100,150,280,'rgba(120,70,255,.25)');neb(320,460,260,'rgba(255,90,140,.15)');
+  stars.forEach(s=>{s.y+=s.s*40*dt;if(s.y>H){s.y=0;s.x=Math.random()*W}ctx.fillStyle='rgba(200,200,255,'+(.25+s.s/4)+')';ctx.fillRect(s.x,s.y,s.s,s.s)});
+  if(!S)return;
+  ctx.save();if(S.shake>0)ctx.translate((Math.random()-.5)*S.shake*14,(Math.random()-.5)*S.shake*14);
+  S.u.forEach(u=>{glow(u.k=='p'?'#ffd166':'#7dffb0',18);ctx.beginPath();ctx.arc(u.x,u.y,10+Math.sin(S.t*8)*2,0,6.28);ctx.fill()});
+  S.b.forEach(b=>{glow('#4de1ff',10);ctx.fillRect(b.x-2,b.y-9,4,16)});
+  S.eb.forEach(b=>{glow('#ff6b8a',12);ctx.beginPath();ctx.arc(b.x,b.y,5,0,6.28);ctx.fill()});
+  S.e.forEach(e=>{
+    if(e.boss){glow('#b388ff',26);ctx.beginPath();for(let i=0;i<6;i++){const a=i*1.047+S.t*.5;ctx.lineTo(e.x+Math.cos(a)*e.r,e.y+Math.sin(a)*e.r*.8)}ctx.closePath();ctx.fill();
+      ctx.shadowBlur=0;ctx.fillStyle='#2a2670';ctx.fillRect(e.x-e.r,e.y-e.r-14,e.r*2,6);ctx.fillStyle='#ff6b8a';ctx.fillRect(e.x-e.r,e.y-e.r-14,e.r*2*Math.max(0,e.hp)/e.max,6)}
+    else{glow(e.tank?'#ffd166':'#ff6b8a',16);ctx.beginPath();ctx.moveTo(e.x,e.y+e.r);ctx.lineTo(e.x-e.r,e.y-e.r*.6);ctx.lineTo(e.x,e.y-e.r*.2);ctx.lineTo(e.x+e.r,e.y-e.r*.6);ctx.closePath();ctx.fill()}
+  });
+  S.p.forEach(p=>{ctx.globalAlpha=Math.max(0,p.l*1.4);glow(p.c,8);ctx.fillRect(p.x,p.y,3,3)});ctx.globalAlpha=1;
+  if(S.inv<=0||Math.floor(S.t*14)%2){glow('#4de1ff',22);ctx.beginPath();ctx.moveTo(S.x,S.y-20);ctx.lineTo(S.x-16,S.y+16);ctx.lineTo(S.x,S.y+8);ctx.lineTo(S.x+16,S.y+16);ctx.closePath();ctx.fill();
+    glow('#ffd166',14);ctx.fillRect(S.x-3,S.y+12,6,6+Math.random()*8)}
+  if(S.sh){ctx.shadowColor='#7dffb0';ctx.shadowBlur=16;ctx.strokeStyle='#7dffb0';ctx.lineWidth=2;ctx.beginPath();ctx.arc(S.x,S.y,26,0,6.28);ctx.stroke()}
+  ctx.restore();ctx.shadowBlur=0;ctx.textAlign='center';ctx.font='800 20px Vazirmatn,Tahoma';
+  if(S.cmb>=5){ctx.fillStyle='#ffd166';ctx.fillText('کمبو ×'+fa(1+Math.min(4,Math.floor(S.cmb/5))),W/2,34)}
+  if(S.mt>0){ctx.globalAlpha=Math.min(1,S.mt);ctx.fillStyle='#fff';ctx.fillText(S.msg,W/2,260);ctx.globalAlpha=1}
+}
+function loop(t){const dt=Math.min(.05,(t-last)/1000||0);last=t;if(run)step(dt);draw(dt);requestAnimationFrame(loop)}
+function pos(e){const r=cv.getBoundingClientRect();tx=(e.clientX-r.left)*W/r.width;ty=(e.clientY-r.top)*H/r.height-50}
+addEventListener('pointermove',pos);addEventListener('pointerdown',pos);
+addEventListener('keydown',e=>{keys[e.key]=1;if(e.key.startsWith('Arrow'))e.preventDefault()});
+addEventListener('keyup',e=>{keys[e.key]=0});
+document.getElementById('go').onclick=()=>{reset();tx=W/2;ty=500;run=true;document.getElementById('ov').hidden=true;hud()};
+document.getElementById('mu').onclick=function(){mute=!mute;this.textContent=mute?'🔇':'🔊'};
+reset();requestAnimationFrame(loop);
+</script>
+</body>
+</html>
