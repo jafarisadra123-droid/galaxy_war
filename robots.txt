@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jafarisadra123-droid.github.io/galaxy_war/sitemap.xml
