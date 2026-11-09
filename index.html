@@ -1,204 +1,145 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="google-site-verification" content="cSaWu3M_2rWf5j5DWlICTHMQIQYPraHVjUWHO9OSww4" />
-<title>نبرد کهکشانی | بازی آنلاین فضایی رایگان</title>
-<meta name="description" content="نبرد کهکشانی یک بازی فضایی آنلاین و رایگان است. با سفینه‌ات از دشمنان فرار کن، با باس‌ها بجنگ و رکورد بزن. بدون نصب، روی موبایل و کامپیوتر.">
-<meta name="robots" content="index, follow">
-<meta name="theme-color" content="#0d0b2b">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="google-site-verification" content="cSaWu3M_2rWf5j5DWlICTHMQIQYPraHVjUWHO9OSww4">
+<title>روباه کوچولو | بازی دونده بی‌پایان آنلاین</title>
+<meta name="description" content="در بازی رایگان روباه کوچولو بدو، از موانع جاخالی بده، ستاره جمع کن و رکورد خودت را بشکن. بازی آنلاین موبایل و کامپیوتر، بدون نصب.">
+<meta name="theme-color" content="#100d35">
+<meta name="robots" content="index,follow">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta property="og:type" content="website">
-<meta property="og:title" content="نبرد کهکشانی | بازی آنلاین فضایی رایگان">
-<meta property="og:description" content="شوتر فضایی سریع با باس، پاور‌آپ و رکورد. همین الان بازی کن.">
+<meta property="og:title" content="روباه کوچولو | بازی دونده بی‌پایان">
+<meta property="og:description" content="بدو، ستاره جمع کن و رکوردت را بشکن!">
 <meta name="twitter:card" content="summary">
-<!-- بعد از آپلود روی دامنه‌ی خودت این خط را فعال کن:
-<link rel="canonical" href="https://YOUR-DOMAIN/">
-<meta property="og:url" content="https://YOUR-DOMAIN/"> -->
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"نبرد کهکشانی","description":"بازی شوتر فضایی آنلاین و رایگان با باس و پاور‌آپ","genre":"Shooter","inLanguage":"fa","applicationCategory":"Game","operatingSystem":"Any (Web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;800&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#eceaf7;--fg:#1b1850;--card:#fff;--muted:#5b5894;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d0b2b;--fg:#f1efff;--card:#17144a;--muted:#a9a6e0;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0d0b2b;--fg:#f1efff;--card:#17144a;--muted:#a9a6e0;color-scheme:dark}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
+:root{color-scheme:dark;--bg:#100d35;--panel:#201b55;--ink:#fff;--muted:#c4c0f0;--pink:#ff70b7;--cyan:#63eaff;--gold:#ffe27a}
 *{box-sizing:border-box}
-body{margin:0;min-height:100vh;background:var(--bg);color:var(--fg);font-family:"Vazirmatn",Tahoma,sans-serif;display:flex;flex-direction:column;align-items:center;gap:12px;padding:12px}
-.hud{width:min(100%,400px);display:flex;justify-content:space-between;align-items:center;font-weight:800;font-size:1.05rem}
-.hud span small{display:block;font-weight:400;color:var(--muted);font-size:.75rem}
-.stage{position:relative;width:min(100%,400px);aspect-ratio:400/600;border-radius:18px;overflow:hidden;background:#0d0b2b;box-shadow:0 10px 40px rgba(60,40,200,.35);touch-action:none;user-select:none}
-canvas{width:100%;height:100%;display:block}
-.overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;background:rgba(13,11,43,.84);color:#f1efff;padding:24px}
+body{margin:0;min-height:100vh;padding:14px 12px max(18px,env(safe-area-inset-bottom));background:radial-gradient(ellipse at 50% 0%,#34216e 0,#100d35 58%);color:var(--ink);font-family:Vazirmatn,Tahoma,sans-serif;display:flex;align-items:center;flex-direction:column;gap:12px}
+.top{width:min(100%,440px);display:flex;align-items:center;justify-content:space-between;gap:8px}
+.brand{font-size:1.15rem;font-weight:900;color:var(--gold)}
+.stat{background:#211b58;border:1px solid #514a9a;border-radius:14px;padding:6px 12px;text-align:center;min-width:76px;font-weight:900}
+.stat small{display:block;font-size:.65rem;color:var(--muted);font-weight:600}
+.stage{position:relative;width:min(100%,440px);aspect-ratio:400/650;border:2px solid #6558b8;border-radius:24px;overflow:hidden;background:#100d35;box-shadow:0 18px 55px #05031caa,0 0 30px #9d6cff33;touch-action:none}
+canvas{display:block;width:100%;height:100%}
+.overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;text-align:center;padding:26px;background:linear-gradient(180deg,#100d35d9,#100d35ee)}
 .overlay[hidden]{display:none}
-.overlay h1{margin:0;font-size:2.2rem;font-weight:800;color:#ffd166;text-shadow:0 0 24px rgba(255,209,102,.6)}
-.overlay p{margin:0;max-width:30ch;line-height:1.9;color:#cfcdf5}
-button{font:inherit;font-weight:800;font-size:1.1rem;padding:12px 34px;border:0;border-radius:999px;background:#4de1ff;color:#0d0b2b;cursor:pointer;box-shadow:0 0 24px rgba(77,225,255,.6)}
-button.mb{padding:4px 12px;font-size:1.1rem;background:var(--card);color:var(--fg);box-shadow:none}
-button:focus-visible{outline:3px solid #ffd166;outline-offset:3px}
-.info{width:min(100%,640px);line-height:2;color:var(--fg);padding:8px 4px 24px}
-.info h2{font-size:1.3rem;margin:12px 0 4px}.info h3{font-size:1.05rem;margin:16px 0 4px}
-.info p,.info li{color:var(--muted)}
+.logo{font-size:4.2rem;filter:drop-shadow(0 0 18px #ff9d5c)}
+h1{margin:0;font-size:2rem;font-weight:900;color:var(--gold)}
+.overlay p{max-width:30ch;line-height:2;color:#e1dcff;margin:0}
+button{font:inherit;font-weight:900;border:0;border-radius:999px;padding:12px 25px;background:linear-gradient(100deg,#ffe27a,#ff9f70);color:#27133e;box-shadow:0 7px 0 #a65368;cursor:pointer}
+button:active{transform:translateY(3px);box-shadow:0 4px 0 #a65368}
+.secondary{background:#29225f;color:#fff;border:1px solid #6c60b6;box-shadow:none;padding:9px 16px}
+.actions{display:flex;gap:9px;flex-wrap:wrap;justify-content:center}
+.help{width:min(100%,440px);display:flex;gap:8px;justify-content:center;flex-wrap:wrap;color:var(--muted);font-size:.82rem}
+.pill{background:#211b58;border:1px solid #514a9a;border-radius:999px;padding:6px 12px}
+.about{width:min(100%,680px);color:var(--muted);line-height:2;padding:4px 8px 22px}
+.about h2{color:var(--ink);font-size:1.2rem}
+#install{display:none}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
 </style>
 </head>
 <body>
-<div class="hud">
-  <span id="sc">۰<small>score</small></span>
-  <span id="lv">❤❤❤<small>life</small></span>
-  <span id="bs">۰<small>record</small></span>
-  <button class="mb" id="mu" aria-label="قطع و وصل صدا">🔊</button>
-</div>
-<div class="stage">
-  <canvas id="c" width="400" height="600"></canvas>
-  <div class="overlay" id="ov">
-    <h1 id="ttl">نبرد فضانورد</h1>
-    <p id="msg">از دید اول‌شخص فضانورد در کابین پرواز کن! با لمس صفحه، ماوس یا کلیدهای جهتی نشانه را حرکت بده. شلیک خودکار است؛ دشمن‌ها و باس‌ها را شکست بده.</p>
-    <button id="go">شروع مأموریت</button>
-  </div>
-</div>
-<main class="info">
-  <h1 style="font-size:1.5rem;margin:8px 0">نبرد کهکشانی: بازی فضایی آنلاین و رایگان</h1>
-  <p>نبرد کهکشانی یک بازی شوتر فضایی سریع است که مستقیم در مرورگر اجرا می‌شود. نیازی به نصب نیست و روی موبایل، تبلت و کامپیوتر کار می‌کند. موج‌های دشمن را شکست بده، با باس‌های غول‌پیکر بجنگ و بالاترین امتیاز را ثبت کن.</p>
-  <h2>آموزش بازی</h2>
-  <ul>
-    <li>حرکت: لمس صفحه، ماوس یا کلیدهای جهتی</li>
-    <li>شلیک: خودکار است</li>
-    <li>گوی طلایی: تیر سه‌گانه برای ۶ ثانیه</li>
-    <li>گوی سبز: سپر که یک ضربه را جذب می‌کند</li>
-    <li>کمبو: هر ۵ نابودی پشت‌سرهم، ضریب امتیاز را بالاتر می‌برد</li>
-  </ul>
+<header class="top">
+  <div class="brand">🦊 روباه کوچولو</div>
+  <div class="stat" id="score">۰<small>امتیاز</small></div>
+  <div class="stat" id="best">۰<small>رکورد</small></div>
+</header>
+<main class="stage">
+ <canvas id="game" width="400" height="650" aria-label="بازی روباه کوچولو"></canvas>
+ <section class="overlay" id="overlay">
+   <div class="logo">🦊</div>
+   <h1 id="headline">روباه کوچولو</h1>
+   <p id="message">به شهر رنگارنگ خوش اومدی! از موانع رد شو، ستاره‌ها رو جمع کن و رکورد تازه بساز.</p>
+   <div class="actions"><button id="start">شروع بازی</button><button class="secondary" id="shareStart">اشتراک‌گذاری</button></div>
+   <p style="font-size:.78rem">⬅️ ➡️ تغییر مسیر · ⬆️ پرش · لمس دکمه‌ها</p>
+ </section>
 </main>
+<div class="help"><span class="pill">⭐ ستاره جمع کن</span><span class="pill">🧱 از موانع رد شو</span><span class="pill">🏆 رکوردت رو بشکن</span></div>
+<div class="actions"><button class="secondary" id="left">◀ چپ</button><button class="secondary" id="jump">⬆ پرش</button><button class="secondary" id="right">راست ▶</button><button class="secondary" id="install">📲 نصب بازی</button></div>
+<section class="about">
+<h2>یک ماجراجویی کوتاه و هیجان‌انگیز!</h2>
+<p>روباه کوچولو یک بازی دونده بی‌پایان رایگان است. در مسیرهای رنگارنگ شهر بدو، ستاره‌ها را بگیر و از موانع دوری کن. هرچه بیشتر دوام بیاوری سرعت بازی بیشتر می‌شود. بازی مستقیم در مرورگر موبایل و کامپیوتر اجرا می‌شود.</p>
+<h2>روش بازی</h2>
+<p>با کشیدن انگشت به چپ و راست مسیر را عوض کن و با کشیدن انگشت به بالا بپر. روی کامپیوتر از کلیدهای جهت‌دار یا فاصله استفاده کن. می‌توانی با دوستانت امتیازت را به اشتراک بگذاری.</p>
+</section>
 <script>
-const cv=document.getElementById('c'),ctx=cv.getContext('2d'),W=400,H=600;
-const fa=n=>Math.floor(n).toLocaleString('fa-IR',{useGrouping:false});
-let best=0;try{best=+localStorage.getItem('gbest')||0}catch(e){}
-document.getElementById('bs').firstChild.nodeValue=fa(best);
-const stars=Array.from({length:70},()=>({x:Math.random()*W,y:Math.random()*H,s:Math.random()*2+.5}));
-let S,tx=W/2,ty=500,keys={},last=0,run=false,mute=false,AC;
-function snd(f,d,type,v,sl){if(mute)return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const t=AC.currentTime,o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.setValueAtTime(f,t);if(sl)o.frequency.exponentialRampToValueAtTime(sl,t+d);g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.001,t+d);o.connect(g);g.connect(AC.destination);o.start();o.stop(t+d)}catch(e){}}
-function reset(){S={x:W/2,y:500,b:[],e:[],eb:[],p:[],u:[],score:0,hp:3,fire:0,spawn:1,power:0,t:0,inv:0,sh:false,cmb:0,cd:0,shake:0,nb:500,bn:0,boss:null,msg:'',mt:0}}
-function burst(x,y,col,n){for(let i=0;i<(n||14);i++){const a=Math.random()*6.28,v=Math.random()*200+40;S.p.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,l:.7,c:col})}}
-function hud(){document.getElementById('sc').firstChild.nodeValue=fa(S.score);document.getElementById('lv').firstChild.nodeValue=('❤'.repeat(Math.max(S.hp,0))||'—')+(S.sh?'🛡':'');}
-function over(){
-  run=false;if(S.score>best){best=Math.floor(S.score);try{localStorage.setItem('gbest',best)}catch(e){}}
-  document.getElementById('bs').firstChild.nodeValue=fa(best);
-  document.getElementById('ttl').textContent='سفینه منفجر شد';
-  document.getElementById('msg').textContent='امتیاز تو: '+fa(S.score)+(S.score>=best?' (رکورد جدید!)':'');
-  document.getElementById('go').textContent='دوباره';
-  document.getElementById('ov').hidden=false;
+(()=>{
+const c=document.getElementById('game'),g=c.getContext('2d'),W=400,H=650;
+const $=id=>document.getElementById(id),fa=n=>Math.floor(n).toLocaleString('fa-IR');
+let best=0;try{best=Number(localStorage.getItem('fox-best'))||0}catch(e){}
+$('best').firstChild.nodeValue=fa(best);
+let state='ready',last=0,world=0,player,items,score,stars,speed,spawn,shake=0;
+const lanes=[-1,0,1],laneX=l=>200+l*92;
+function init(){player={lane:0,x:200,y:535,jump:0,vy:0};items=[];score=0;stars=0;speed=245;spawn=.7;world=0;shake=0;hud()}
+function hud(){$('score').firstChild.nodeValue=fa(score);$('best').firstChild.nodeValue=fa(best)}
+function start(){init();state='play';$('overlay').hidden=true}
+function end(){state='over';if(score>best){best=score;try{localStorage.setItem('fox-best',best)}catch(e){}}hud();$('headline').textContent='آفرین!';$('message').textContent='امتیازت '+fa(score)+' شد و '+fa(stars)+' ستاره جمع کردی. '+(score>=best?'رکورد تازه ثبت شد!':'می‌تونی رکوردت رو بهتر کنی!');$('start').textContent='دوباره بازی کن';$('overlay').hidden=false}
+function move(d){if(state!=='play')return;player.lane=Math.max(-1,Math.min(1,player.lane+d))}
+function jump(){if(state!=='play'||player.jump>0)return;player.vy=-570;player.jump=1}
+function add(){const lane=lanes[Math.floor(Math.random()*3)];if(Math.random()<.63){items.push({type:'star',lane,y:-20,r:13,got:false})}else{items.push({type:'block',lane,y:-35,r:24,hit:false})}}
+function update(dt){
+ world+=dt;speed=Math.min(480,245+world*5);score+=Math.floor(dt*10);spawn-=dt;
+ if(spawn<=0){add();spawn=Math.max(.42,1.0-world*.006)*(0.7+Math.random()*.6)}
+ player.x+=(laneX(player.lane)-player.x)*Math.min(1,dt*13);
+ if(player.jump>0){player.vy+=1450*dt;player.y+=player.vy*dt;if(player.y>=535){player.y=535;player.vy=0;player.jump=0}}
+ for(const it of items){it.y+=speed*dt;if(it.lane===player.lane&&Math.abs(it.y-player.y)<35){
+  if(it.type==='star'&&!it.got){it.got=true;stars++;score+=50}
+  if(it.type==='block'&&!it.hit&&player.jump===0){it.hit=true;shake=.18;score=Math.max(0,score-25);player.lane=lanes[(lanes.indexOf(player.lane)+1)%3]}
+ }}
+ items=items.filter(x=>x.y<H+40&&!(x.type==='star'&&x.got)&&!(x.type==='block'&&x.hit));
+ shake=Math.max(0,shake-dt);hud();
 }
-function hurt(){
-  if(S.inv>0)return;S.inv=1.2;S.shake=.5;
-  if(S.sh){S.sh=false;burst(S.x,S.y,'#7dffb0',20);snd(300,.2,'sine',.08,80);return}
-  S.hp--;S.cmb=0;burst(S.x,S.y,'#4de1ff',24);snd(160,.35,'sawtooth',.1,40);
-  if(S.hp<=0){hud();over()}
-}
-function kill(e){
-  e.dead=1;const m=1+Math.min(4,Math.floor(S.cmb/5));S.cmb++;S.cd=2;
-  S.score+=(e.boss?300:e.tank?50:10)*m;
-  burst(e.x,e.y,e.boss?'#b388ff':e.tank?'#ffd166':'#ff6b8a',e.boss?70:e.tank?30:16);
-  snd(e.boss?90:200,e.boss?.8:.18,'sawtooth',.07,40);
-  if(e.boss){S.shake=1;S.boss=null;S.hp=Math.min(5,S.hp+1);S.u.push({x:e.x-30,y:e.y,k:'s'},{x:e.x+30,y:e.y,k:'p'});S.msg='باس نابود شد! یک جان گرفتی';S.mt=2.5}
-  else if(Math.random()<(e.tank?.45:.06))S.u.push({x:e.x,y:e.y,k:Math.random()<.5?'p':'s'});
-}
-function step(dt){
-  S.t+=dt;S.cd-=dt;if(S.cd<=0)S.cmb=0;S.shake=Math.max(0,S.shake-dt*2);S.mt-=dt;
-  if(keys.ArrowLeft)tx-=380*dt;if(keys.ArrowRight)tx+=380*dt;if(keys.ArrowUp)ty-=380*dt;if(keys.ArrowDown)ty+=380*dt;
-  tx=Math.min(W-20,Math.max(20,tx));ty=Math.min(H-30,Math.max(300,ty));
-  S.x+=(tx-S.x)*Math.min(1,dt*14);S.y+=(ty-S.y)*Math.min(1,dt*14);
-  S.fire-=dt;S.power-=dt;S.inv-=dt;
-  if(S.fire<=0){S.fire=.2;(S.power>0?[-.25,0,.25]:[0]).forEach(d=>S.b.push({x:S.x,y:S.y-18,vx:d*400,vy:-560}));snd(880,.05,'square',.012)}
-  S.spawn-=dt;
-  if(S.spawn<=0){const lvl=1+S.score/600;S.spawn=Math.max(.28,1-lvl*.08)*(S.boss?2.2:1);const tank=Math.random()<.18;
-    S.e.push({x:30+Math.random()*(W-60),y:-30,r:tank?26:15,hp:tank?4:1,v:(tank?60:90)+Math.random()*40+lvl*10,ph:Math.random()*6,tank})}
-  if(!S.boss&&S.score>=S.nb){S.bn++;S.nb=S.score+700+S.bn*200;const hp=30+S.bn*12;
-    S.boss={x:W/2,y:-70,r:44,hp,max:hp,boss:1,sh:1.2};S.e.push(S.boss);S.msg='هشدار! باس نزدیک می‌شود';S.mt=2.5;snd(110,.6,'sawtooth',.08,60)}
-  S.b.forEach(b=>{b.x+=b.vx*dt;b.y+=b.vy*dt});S.b=S.b.filter(b=>b.y>-20);
-  S.eb.forEach(b=>{b.x+=b.vx*dt;b.y+=b.vy*dt});
-  S.e.forEach(e=>{
-    if(e.boss){e.y=Math.min(110,e.y+60*dt);e.x=W/2+Math.sin(S.t*.9)*130;e.sh-=dt;
-      if(e.sh<=0&&e.y>=110){e.sh=Math.max(.7,1.4-S.bn*.1);const n=3+Math.min(4,S.bn);
-        for(let i=0;i<n;i++){const a=1.57+(i-(n-1)/2)*.28;S.eb.push({x:e.x,y:e.y+30,vx:Math.cos(a)*190,vy:Math.sin(a)*190})}snd(260,.15,'square',.03,120)}
-    }else{e.y+=e.v*dt;e.x+=Math.sin(S.t*2+e.ph)*40*dt}
-  });
-  S.u.forEach(u=>u.y+=110*dt);
-  for(const e of S.e){
-    for(const b of S.b){if(!b.d&&Math.hypot(e.x-b.x,e.y-b.y)<e.r+4){b.d=1;e.hp--;burst(b.x,b.y,'#fff',3);if(e.hp<=0&&!e.dead)kill(e)}}
-    if(!e.dead&&Math.hypot(e.x-S.x,e.y-S.y)<e.r+12){if(!e.boss){e.dead=1;burst(e.x,e.y,'#ff6b8a',12)}hurt()}
-    if(e.y>H+40){e.dead=1;S.score=Math.max(0,S.score-5)}
+function rounded(x,y,w,h,r){g.beginPath();g.roundRect(x,y,w,h,r)}
+function draw(){
+ g.save();if(shake>0)g.translate((Math.random()-.5)*8,(Math.random()-.5)*8);
+ const sky=g.createLinearGradient(0,0,0,H);sky.addColorStop(0,'#17164f');sky.addColorStop(.55,'#52317c');sky.addColorStop(1,'#ff9b91');g.fillStyle=sky;g.fillRect(0,0,W,H);
+ // stars and distant skyline
+ for(let i=0;i<38;i++){let x=(i*83+Math.sin(i*8)*25)%W,y=(i*47+world*13)%300;g.fillStyle='#fff8c9';g.globalAlpha=.35+(i%3)*.2;g.fillRect(x,y,2,2)}g.globalAlpha=1;
+ for(let i=0;i<12;i++){let x=i*38-8,h=75+(i*31%85);g.fillStyle=i%2?'#30265f':'#392766';g.fillRect(x,315-h,30,h);g.fillStyle='#ffe58a';for(let j=0;j<3;j++)g.fillRect(x+7,325-h+j*20,4,7)}
+ // road perspective
+ g.fillStyle='#211c4f';g.beginPath();g.moveTo(88,300);g.lineTo(312,300);g.lineTo(400,650);g.lineTo(0,650);g.closePath();g.fill();
+ g.strokeStyle='#a48bdf';g.lineWidth=3;g.beginPath();g.moveTo(88,300);g.lineTo(0,650);g.moveTo(312,300);g.lineTo(400,650);g.stroke();
+ // lane dashes
+ for(let lane=0;lane<2;lane++){for(let j=0;j<8;j++){let y=((j*90+world*speed*.8)%420)+250;let t=(y-250)/400;let x=200+(lane===0?-1:1)*(18+t*74);let w=2+t*3;g.fillStyle='#9c8be2';g.fillRect(x-w/2,y,w,18+t*18)}}
+ // colorful side decorations
+ for(let i=0;i<8;i++){let y=((i*105+world*speed*.55)%470)+190;let side=i%2?1:-1;let x=200+side*(125+(y-190)*.17);g.fillStyle=i%2?'#ff70b7':'#63eaff';g.globalAlpha=.75;g.beginPath();g.arc(x,y,4+(y-190)*.018,0,Math.PI*2);g.fill()}g.globalAlpha=1;
+ if(state!=='ready'){
+  for(const it of items){let t=Math.max(.45,(it.y-250)/400),x=laneX(it.lane)*(0.5+t*.5),scale=.55+t*.75;
+   if(it.type==='star'){g.save();g.translate(x,it.y);g.rotate(world*2);g.scale(scale,scale);g.shadowColor='#ffe27a';g.shadowBlur=18;g.fillStyle='#ffe27a';g.font='30px sans-serif';g.textAlign='center';g.fillText('⭐',0,10);g.restore()}
+   else{g.save();g.translate(x,it.y);g.scale(scale,scale);g.shadowColor='#ff70b7';g.shadowBlur=14;g.fillStyle='#ff70b7';rounded(-21,-22,42,44,9);g.fill();g.shadowBlur=0;g.fillStyle='#ffe3f2';rounded(-12,-11,24,7,3);g.fill();g.restore()}
   }
-  for(const b of S.eb){if(Math.hypot(b.x-S.x,b.y-S.y)<16){b.d=1;hurt()}}
-  S.b=S.b.filter(b=>!b.d);S.e=S.e.filter(e=>!e.dead);S.eb=S.eb.filter(b=>!b.d&&b.y<H+20&&b.x>-20&&b.x<W+20);
-  S.u=S.u.filter(u=>{if(Math.hypot(u.x-S.x,u.y-S.y)<26){if(u.k=='p')S.power=6;else S.sh=true;S.score+=20;snd(700,.2,'sine',.06,1200);return false}return u.y<H+20});
-  S.p.forEach(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;p.l-=dt});S.p=S.p.filter(p=>p.l>0);
-  if(run)hud();
+  // fox character
+  g.save();g.translate(player.x,player.y);let lift=player.jump?Math.sin((player.y-420)/115)*-8:0;g.translate(0,lift);
+  g.shadowColor='#ff9d5c';g.shadowBlur=22;
+  g.fillStyle='#ff9d5c';g.beginPath();g.moveTo(-27,-17);g.lineTo(-25,-48);g.lineTo(-5,-34);g.lineTo(25,-48);g.lineTo(29,-17);g.quadraticCurveTo(28,15,0,19);g.quadraticCurveTo(-28,15,-27,-17);g.fill();
+  g.shadowBlur=0;g.fillStyle='#fff1d6';g.beginPath();g.ellipse(0,-4,17,15,0,0,Math.PI*2);g.fill();
+  g.fillStyle='#2a174b';g.beginPath();g.arc(-8,-13,3,0,7);g.arc(8,-13,3,0,7);g.fill();
+  g.fillStyle='#ff70b7';g.beginPath();g.arc(0,-4,3,0,7);g.fill();
+  g.fillStyle='#ffbd7c';g.beginPath();g.ellipse(-22,18,10,5,-.3,0,7);g.ellipse(22,18,10,5,.3,0,7);g.fill();
+  g.restore();
+ }
+ // foreground frame
+ g.fillStyle='#17123d';g.fillRect(0,0,400,10);g.fillStyle='#ffe27a';g.fillRect(0,0,Math.min(400,(world%20)*20),4);
+ g.restore();
 }
-function glow(c,b){ctx.shadowColor=c;ctx.shadowBlur=b;ctx.fillStyle=c}
-function neb(x,y,r,c){const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,c);g.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}
-function draw(dt){
-  ctx.shadowBlur=0;ctx.fillStyle='#050817';ctx.fillRect(0,0,W,H);
-  const horizon=105;
-  const bg=ctx.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#080b25');bg.addColorStop(.55,'#171044');bg.addColorStop(1,'#050817');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-  neb(100,150,280,'rgba(120,70,255,.24)');neb(320,350,260,'rgba(255,90,140,.13)');
-  // Perspective starfield: the astronaut is now looking forward from inside the cockpit.
-  stars.forEach(s=>{s.y+=s.s*55*dt;if(s.y>H){s.y=0;s.x=Math.random()*W}const z=.45+s.y/H;ctx.fillStyle='rgba(205,225,255,'+(.22+z*.55)+')';ctx.fillRect(s.x,s.y,s.s*z*1.5,s.s*z*1.5)});
-  // Distant planet and horizon glow.
-  ctx.save();ctx.globalAlpha=.75;glow('#8a75ff',20);ctx.beginPath();ctx.arc(318,115,34,0,6.28);ctx.fill();ctx.shadowBlur=0;ctx.fillStyle='#15134a';ctx.beginPath();ctx.arc(308,105,34,0,6.28);ctx.fill();ctx.restore();
-  if(!S)return;
-  ctx.save();if(S.shake>0)ctx.translate((Math.random()-.5)*S.shake*14,(Math.random()-.5)*S.shake*14);
-  // Enemy ships appear as approaching objects in a first-person perspective.
-  S.e.forEach(e=>{
-    const depth=Math.max(.18,Math.min(1.35,.28+e.y/540)),x=200+(e.x-200)*(.28+depth*.72),y=horizon+e.y*.72,r=(e.boss?e.r*.95:e.r)*(.32+depth*.78);
-    ctx.save();ctx.translate(x,y);ctx.scale(depth,depth);
-    if(e.boss){
-      glow('#b388ff',28);ctx.fillStyle='#7d5be8';ctx.beginPath();ctx.moveTo(0,-r*1.1);ctx.lineTo(r*1.3,-r*.35);ctx.lineTo(r,.8*r);ctx.lineTo(0,r*.65);ctx.lineTo(-r,.8*r);ctx.lineTo(-r*1.3,-r*.35);ctx.closePath();ctx.fill();
-      ctx.fillStyle='#d8c8ff';ctx.fillRect(-r*.72,-r*.08,r*1.44,4);
-      ctx.fillStyle='#ff6b8a';ctx.fillRect(-r*.72,-r*.08,r*1.44*Math.max(0,e.hp)/e.max,4);
-      glow('#fff0a8',12);ctx.fillRect(-r*.18,-r*.15,r*.36,r*.22);
-    }else{
-      glow(e.tank?'#ffd166':'#ff6b8a',20);ctx.fillStyle=e.tank?'#c68b35':'#d94c83';
-      ctx.beginPath();ctx.moveTo(0,-r*1.2);ctx.lineTo(r*1.25,r*.65);ctx.lineTo(r*.35,r*.42);ctx.lineTo(0,r*.9);ctx.lineTo(-r*.35,r*.42);ctx.lineTo(-r*1.25,r*.65);ctx.closePath();ctx.fill();
-      glow('#fff2c2',8);ctx.fillRect(-r*.18,-r*.2,r*.36,r*.35);
-    }
-    ctx.restore();
-  });
-  // Player fire is shown as energy bolts launched from the cockpit.
-  S.b.forEach(b=>{const k=Math.max(.35,Math.min(1,(600-b.y)/600));glow('#4de1ff',15);ctx.strokeStyle='#9af5ff';ctx.lineWidth=2+k*2;ctx.beginPath();ctx.moveTo(200+(b.x-200)*.12,560);ctx.lineTo(200+(b.x-200)*.65,Math.max(125,560-(600-b.y)*.8));ctx.stroke()});
-  S.eb.forEach(b=>{const k=Math.max(.4,Math.min(1,.3+b.y/650));glow('#ff557e',14);ctx.strokeStyle='#ff8ba5';ctx.lineWidth=2+k*2;ctx.beginPath();ctx.moveTo(200+(b.x-200)*.3,horizon+b.y*.72);ctx.lineTo(200+(b.x-200)*.3+ b.vx*.035,horizon+b.y*.72+18*k);ctx.stroke()});
-  S.u.forEach(u=>{const x=200+(u.x-200)*.65,y=horizon+u.y*.72;glow(u.k=='p'?'#ffd166':'#7dffb0',18);ctx.beginPath();ctx.arc(x,y,7+Math.sin(S.t*8)*2,0,6.28);ctx.fill()});
-  S.p.forEach(p=>{ctx.globalAlpha=Math.max(0,p.l*1.4);glow(p.c,8);ctx.fillRect(200+(p.x-200)*.5,horizon+p.y*.7,3,3)});ctx.globalAlpha=1;
-  // Astronaut gloves and cockpit rim frame the view.
-  ctx.shadowBlur=0;ctx.fillStyle='#101a3b';ctx.beginPath();ctx.moveTo(0,600);ctx.lineTo(0,548);ctx.quadraticCurveTo(34,515,78,548);ctx.lineTo(120,600);ctx.closePath();ctx.fill();
-  ctx.beginPath();ctx.moveTo(400,600);ctx.lineTo(400,548);ctx.quadraticCurveTo(366,515,322,548);ctx.lineTo(280,600);ctx.closePath();ctx.fill();
-  // Gloved hands.
-  glow('#4de1ff',12);ctx.fillStyle='#c9d8ef';ctx.beginPath();ctx.ellipse(62,555,25,43,-.48,0,6.28);ctx.fill();ctx.beginPath();ctx.ellipse(338,555,25,43,.48,0,6.28);ctx.fill();
-  ctx.shadowBlur=0;ctx.strokeStyle='#647da8';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(48,540);ctx.lineTo(68,565);ctx.moveTo(352,540);ctx.lineTo(332,565);ctx.stroke();
-  // Cockpit dashboard.
-  ctx.fillStyle='#0b1029';ctx.beginPath();ctx.moveTo(104,600);ctx.lineTo(132,557);ctx.quadraticCurveTo(200,535,268,557);ctx.lineTo(296,600);ctx.closePath();ctx.fill();
-  ctx.strokeStyle='#4de1ff';ctx.lineWidth=2;ctx.shadowColor='#4de1ff';ctx.shadowBlur=12;ctx.beginPath();ctx.moveTo(128,577);ctx.quadraticCurveTo(200,550,272,577);ctx.stroke();ctx.shadowBlur=0;
-  ctx.fillStyle='#ffd166';ctx.font='800 10px Vazirmatn,Tahoma';ctx.textAlign='center';ctx.fillText('ASTRONAUT FLIGHT SYSTEM',200,589);
-  // Aim reticle follows the player's touch/mouse position.
-  const rx=200+(S.x-200)*.45,ry=Math.max(145,Math.min(500,150+(S.y-300)*.55));
-  ctx.strokeStyle='#9af5ff';ctx.lineWidth=1.5;ctx.shadowColor='#4de1ff';ctx.shadowBlur=10;ctx.beginPath();ctx.arc(rx,ry,12,0,6.28);ctx.moveTo(rx-20,ry);ctx.lineTo(rx-7,ry);ctx.moveTo(rx+7,ry);ctx.lineTo(rx+20,ry);ctx.moveTo(rx,ry-20);ctx.lineTo(rx,ry-7);ctx.moveTo(rx,ry+7);ctx.lineTo(rx,ry+20);ctx.stroke();ctx.shadowBlur=0;
-  if(S.sh){ctx.strokeStyle='#7dffb0';ctx.lineWidth=3;ctx.shadowColor='#7dffb0';ctx.shadowBlur=18;ctx.beginPath();ctx.arc(200,350,210,Math.PI*1.08,Math.PI*1.92);ctx.stroke();ctx.shadowBlur=0}
-  ctx.restore();ctx.textAlign='center';ctx.font='800 20px Vazirmatn,Tahoma';
-  if(S.cmb>=5){ctx.fillStyle='#ffd166';ctx.fillText('کمبو ×'+fa(1+Math.min(4,Math.floor(S.cmb/5))),W/2,34)}
-  if(S.mt>0){ctx.globalAlpha=Math.min(1,S.mt);ctx.fillStyle='#fff';ctx.fillText(S.msg,W/2,260);ctx.globalAlpha=1}
-}
-function loop(t){const dt=Math.min(.05,(t-last)/1000||0);last=t;if(run)step(dt);draw(dt);requestAnimationFrame(loop)}
-function pos(e){const r=cv.getBoundingClientRect();tx=(e.clientX-r.left)*W/r.width;ty=(e.clientY-r.top)*H/r.height-50}
-addEventListener('pointermove',pos);addEventListener('pointerdown',pos);
-addEventListener('keydown',e=>{keys[e.key]=1;if(e.key.startsWith('Arrow'))e.preventDefault()});
-addEventListener('keyup',e=>{keys[e.key]=0});
-document.getElementById('go').onclick=()=>{reset();tx=W/2;ty=500;run=true;document.getElementById('ov').hidden=true;hud()};
-document.getElementById('mu').onclick=function(){mute=!mute;this.textContent=mute?'🔇':'🔊'};
-reset();
-if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}))}
-let deferredInstall=null;window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstall=e;const b=document.createElement("button");b.className="mb";b.id="install";b.textContent="📲 نصب بازی";document.querySelector(".hud").appendChild(b);b.onclick=async()=>{if(!deferredInstall)return;deferredInstall.prompt();await deferredInstall.userChoice;deferredInstall=null;b.remove()}});
-requestAnimationFrame(loop);
+function frame(t){let dt=Math.min(.04,(t-last)/1000||0);last=t;if(state==='play')update(dt);draw();requestAnimationFrame(frame)}
+$('start').onclick=start;
+$('left').onclick=()=>move(-1);$('right').onclick=()=>move(1);$('jump').onclick=jump;
+window.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','ArrowUp',' ','a','d','w'].includes(e.key)){e.preventDefault();if(state!=='play'&&e.key===' ')start();else if(e.key==='ArrowLeft'||e.key==='a')move(-1);else if(e.key==='ArrowRight'||e.key==='d')move(1);else jump()}});
+let sx=0,sy=0;c.addEventListener('pointerdown',e=>{sx=e.clientX;sy=e.clientY});c.addEventListener('pointerup',e=>{let dx=e.clientX-sx,dy=e.clientY-sy;if(Math.max(Math.abs(dx),Math.abs(dy))<18){if(e.clientX<c.getBoundingClientRect().left+c.clientWidth/2)move(-1);else move(1)}else if(Math.abs(dx)>Math.abs(dy))move(dx>0?1:-1);else if(dy<0)jump()});
+async function share(){let msg='من در بازی روباه کوچولو '+fa(score)+' امتیاز گرفتم! تو می‌تونی رکوردم رو بشکنی؟ https://jafarisadra123-droid.github.io/galaxy_war/';try{if(navigator.share)await navigator.share({title:'روباه کوچولو',text:msg});else if(navigator.clipboard){await navigator.clipboard.writeText(msg);$('message').textContent='متن دعوت کپی شد؛ برای دوستت بفرست!'}}catch(e){}}
+$('shareStart').onclick=share;
+let installPrompt=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;$('install').style.display='inline-block'});$('install').onclick=async()=>{if(installPrompt){installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$('install').style.display='none'}};
+if('serviceWorker'in navigator)addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+init();requestAnimationFrame(frame);
+})();
 </script>
 </body>
 </html>
