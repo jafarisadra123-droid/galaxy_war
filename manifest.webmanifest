@@ -1,0 +1,16 @@
+{
+  "id": "./",
+  "name": "نبرد کهکشانی",
+  "short_name": "نبرد کهکشانی",
+  "description": "بازی فضایی اول‌شخص و آنلاین",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0d0b2b",
+  "theme_color": "#0d0b2b",
+  "icons": [
+    {"src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"}
+  ]
+}
