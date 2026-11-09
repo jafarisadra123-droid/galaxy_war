@@ -1,0 +1,82 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "icon.svg"
+      - "manifest.webmanifest"
+      - "sw.js"
+      - ".github/workflows/android-apk.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout game
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Prepare web app
+        run: |
+          mkdir -p www
+          cp index.html icon.svg manifest.webmanifest sw.js www/
+          cat > package.json <<'EOF'
+          {
+            "name": "galaxy-war-android",
+            "version": "1.0.0",
+            "private": true,
+            "description": "Galaxy War Android wrapper",
+            "dependencies": {
+              "@capacitor/core": "^6.2.1",
+              "@capacitor/android": "^6.2.1"
+            },
+            "devDependencies": {
+              "@capacitor/cli": "^6.2.1"
+            }
+          }
+          EOF
+          cat > capacitor.config.json <<'EOF'
+          {
+            "appId": "com.galaxywar.game",
+            "appName": "نبرد کهکشانی",
+            "webDir": "www",
+            "bundledWebRuntime": false
+          }
+          EOF
+          npm install
+
+      - name: Add Android platform
+        run: npx cap add android
+
+      - name: Sync Android project
+        run: npx cap sync android
+
+      - name: Build debug APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload installable APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: galaxy-war-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 14
