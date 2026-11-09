@@ -1,15 +1,15 @@
 {
   "id": "./",
-  "name": "نبرد کهکشانی",
-  "short_name": "نبرد کهکشانی",
-  "description": "بازی فضایی اول‌شخص و آنلاین",
+  "name": "روباه کوچولو",
+  "short_name": "روباه کوچولو",
+  "description": "بازی دونده بی‌پایان رایگان؛ بدو، از موانع رد شو و ستاره جمع کن.",
   "lang": "fa",
   "dir": "rtl",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#0d0b2b",
-  "theme_color": "#0d0b2b",
+  "background_color": "#100d35",
+  "theme_color": "#100d35",
   "icons": [
     {"src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"}
   ]
