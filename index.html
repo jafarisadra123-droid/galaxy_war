@@ -8,6 +8,10 @@
 <meta name="description" content="نبرد کهکشانی یک بازی فضایی آنلاین و رایگان است. با سفینه‌ات از دشمنان فرار کن، با باس‌ها بجنگ و رکورد بزن. بدون نصب، روی موبایل و کامپیوتر.">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0d0b2b">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta property="og:type" content="website">
 <meta property="og:title" content="نبرد کهکشانی | بازی آنلاین فضایی رایگان">
 <meta property="og:description" content="شوتر فضایی سریع با باس، پاور‌آپ و رکورد. همین الان بازی کن.">
@@ -50,9 +54,9 @@ button:focus-visible{outline:3px solid #ffd166;outline-offset:3px}
 <div class="stage">
   <canvas id="c" width="400" height="600"></canvas>
   <div class="overlay" id="ov">
-    <h1 id="ttl"> space war</h1>
-    <p id="msg">سفینه را با انگشت، ماوس یا کلیدهای جهتی حرکت بده. شلیک خودکار است. باس‌ها را نابود کن و رکورد بزن.</p>
-    <button id="go">  Game</button>
+    <h1 id="ttl">نبرد فضانورد</h1>
+    <p id="msg">از دید اول‌شخص فضانورد در کابین پرواز کن! با لمس صفحه، ماوس یا کلیدهای جهتی نشانه را حرکت بده. شلیک خودکار است؛ دشمن‌ها و باس‌ها را شکست بده.</p>
+    <button id="go">شروع مأموریت</button>
   </div>
 </div>
 <main class="info">
@@ -135,24 +139,52 @@ function step(dt){
 function glow(c,b){ctx.shadowColor=c;ctx.shadowBlur=b;ctx.fillStyle=c}
 function neb(x,y,r,c){const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,c);g.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H)}
 function draw(dt){
-  ctx.shadowBlur=0;ctx.fillStyle='#0d0b2b';ctx.fillRect(0,0,W,H);
-  neb(100,150,280,'rgba(120,70,255,.25)');neb(320,460,260,'rgba(255,90,140,.15)');
-  stars.forEach(s=>{s.y+=s.s*40*dt;if(s.y>H){s.y=0;s.x=Math.random()*W}ctx.fillStyle='rgba(200,200,255,'+(.25+s.s/4)+')';ctx.fillRect(s.x,s.y,s.s,s.s)});
+  ctx.shadowBlur=0;ctx.fillStyle='#050817';ctx.fillRect(0,0,W,H);
+  const horizon=105;
+  const bg=ctx.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#080b25');bg.addColorStop(.55,'#171044');bg.addColorStop(1,'#050817');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+  neb(100,150,280,'rgba(120,70,255,.24)');neb(320,350,260,'rgba(255,90,140,.13)');
+  // Perspective starfield: the astronaut is now looking forward from inside the cockpit.
+  stars.forEach(s=>{s.y+=s.s*55*dt;if(s.y>H){s.y=0;s.x=Math.random()*W}const z=.45+s.y/H;ctx.fillStyle='rgba(205,225,255,'+(.22+z*.55)+')';ctx.fillRect(s.x,s.y,s.s*z*1.5,s.s*z*1.5)});
+  // Distant planet and horizon glow.
+  ctx.save();ctx.globalAlpha=.75;glow('#8a75ff',20);ctx.beginPath();ctx.arc(318,115,34,0,6.28);ctx.fill();ctx.shadowBlur=0;ctx.fillStyle='#15134a';ctx.beginPath();ctx.arc(308,105,34,0,6.28);ctx.fill();ctx.restore();
   if(!S)return;
   ctx.save();if(S.shake>0)ctx.translate((Math.random()-.5)*S.shake*14,(Math.random()-.5)*S.shake*14);
-  S.u.forEach(u=>{glow(u.k=='p'?'#ffd166':'#7dffb0',18);ctx.beginPath();ctx.arc(u.x,u.y,10+Math.sin(S.t*8)*2,0,6.28);ctx.fill()});
-  S.b.forEach(b=>{glow('#4de1ff',10);ctx.fillRect(b.x-2,b.y-9,4,16)});
-  S.eb.forEach(b=>{glow('#ff6b8a',12);ctx.beginPath();ctx.arc(b.x,b.y,5,0,6.28);ctx.fill()});
+  // Enemy ships appear as approaching objects in a first-person perspective.
   S.e.forEach(e=>{
-    if(e.boss){glow('#b388ff',26);ctx.beginPath();for(let i=0;i<6;i++){const a=i*1.047+S.t*.5;ctx.lineTo(e.x+Math.cos(a)*e.r,e.y+Math.sin(a)*e.r*.8)}ctx.closePath();ctx.fill();
-      ctx.shadowBlur=0;ctx.fillStyle='#2a2670';ctx.fillRect(e.x-e.r,e.y-e.r-14,e.r*2,6);ctx.fillStyle='#ff6b8a';ctx.fillRect(e.x-e.r,e.y-e.r-14,e.r*2*Math.max(0,e.hp)/e.max,6)}
-    else{glow(e.tank?'#ffd166':'#ff6b8a',16);ctx.beginPath();ctx.moveTo(e.x,e.y+e.r);ctx.lineTo(e.x-e.r,e.y-e.r*.6);ctx.lineTo(e.x,e.y-e.r*.2);ctx.lineTo(e.x+e.r,e.y-e.r*.6);ctx.closePath();ctx.fill()}
+    const depth=Math.max(.18,Math.min(1.35,.28+e.y/540)),x=200+(e.x-200)*(.28+depth*.72),y=horizon+e.y*.72,r=(e.boss?e.r*.95:e.r)*(.32+depth*.78);
+    ctx.save();ctx.translate(x,y);ctx.scale(depth,depth);
+    if(e.boss){
+      glow('#b388ff',28);ctx.fillStyle='#7d5be8';ctx.beginPath();ctx.moveTo(0,-r*1.1);ctx.lineTo(r*1.3,-r*.35);ctx.lineTo(r,.8*r);ctx.lineTo(0,r*.65);ctx.lineTo(-r,.8*r);ctx.lineTo(-r*1.3,-r*.35);ctx.closePath();ctx.fill();
+      ctx.fillStyle='#d8c8ff';ctx.fillRect(-r*.72,-r*.08,r*1.44,4);
+      ctx.fillStyle='#ff6b8a';ctx.fillRect(-r*.72,-r*.08,r*1.44*Math.max(0,e.hp)/e.max,4);
+      glow('#fff0a8',12);ctx.fillRect(-r*.18,-r*.15,r*.36,r*.22);
+    }else{
+      glow(e.tank?'#ffd166':'#ff6b8a',20);ctx.fillStyle=e.tank?'#c68b35':'#d94c83';
+      ctx.beginPath();ctx.moveTo(0,-r*1.2);ctx.lineTo(r*1.25,r*.65);ctx.lineTo(r*.35,r*.42);ctx.lineTo(0,r*.9);ctx.lineTo(-r*.35,r*.42);ctx.lineTo(-r*1.25,r*.65);ctx.closePath();ctx.fill();
+      glow('#fff2c2',8);ctx.fillRect(-r*.18,-r*.2,r*.36,r*.35);
+    }
+    ctx.restore();
   });
-  S.p.forEach(p=>{ctx.globalAlpha=Math.max(0,p.l*1.4);glow(p.c,8);ctx.fillRect(p.x,p.y,3,3)});ctx.globalAlpha=1;
-  if(S.inv<=0||Math.floor(S.t*14)%2){glow('#4de1ff',22);ctx.beginPath();ctx.moveTo(S.x,S.y-20);ctx.lineTo(S.x-16,S.y+16);ctx.lineTo(S.x,S.y+8);ctx.lineTo(S.x+16,S.y+16);ctx.closePath();ctx.fill();
-    glow('#ffd166',14);ctx.fillRect(S.x-3,S.y+12,6,6+Math.random()*8)}
-  if(S.sh){ctx.shadowColor='#7dffb0';ctx.shadowBlur=16;ctx.strokeStyle='#7dffb0';ctx.lineWidth=2;ctx.beginPath();ctx.arc(S.x,S.y,26,0,6.28);ctx.stroke()}
-  ctx.restore();ctx.shadowBlur=0;ctx.textAlign='center';ctx.font='800 20px Vazirmatn,Tahoma';
+  // Player fire is shown as energy bolts launched from the cockpit.
+  S.b.forEach(b=>{const k=Math.max(.35,Math.min(1,(600-b.y)/600));glow('#4de1ff',15);ctx.strokeStyle='#9af5ff';ctx.lineWidth=2+k*2;ctx.beginPath();ctx.moveTo(200+(b.x-200)*.12,560);ctx.lineTo(200+(b.x-200)*.65,Math.max(125,560-(600-b.y)*.8));ctx.stroke()});
+  S.eb.forEach(b=>{const k=Math.max(.4,Math.min(1,.3+b.y/650));glow('#ff557e',14);ctx.strokeStyle='#ff8ba5';ctx.lineWidth=2+k*2;ctx.beginPath();ctx.moveTo(200+(b.x-200)*.3,horizon+b.y*.72);ctx.lineTo(200+(b.x-200)*.3+ b.vx*.035,horizon+b.y*.72+18*k);ctx.stroke()});
+  S.u.forEach(u=>{const x=200+(u.x-200)*.65,y=horizon+u.y*.72;glow(u.k=='p'?'#ffd166':'#7dffb0',18);ctx.beginPath();ctx.arc(x,y,7+Math.sin(S.t*8)*2,0,6.28);ctx.fill()});
+  S.p.forEach(p=>{ctx.globalAlpha=Math.max(0,p.l*1.4);glow(p.c,8);ctx.fillRect(200+(p.x-200)*.5,horizon+p.y*.7,3,3)});ctx.globalAlpha=1;
+  // Astronaut gloves and cockpit rim frame the view.
+  ctx.shadowBlur=0;ctx.fillStyle='#101a3b';ctx.beginPath();ctx.moveTo(0,600);ctx.lineTo(0,548);ctx.quadraticCurveTo(34,515,78,548);ctx.lineTo(120,600);ctx.closePath();ctx.fill();
+  ctx.beginPath();ctx.moveTo(400,600);ctx.lineTo(400,548);ctx.quadraticCurveTo(366,515,322,548);ctx.lineTo(280,600);ctx.closePath();ctx.fill();
+  // Gloved hands.
+  glow('#4de1ff',12);ctx.fillStyle='#c9d8ef';ctx.beginPath();ctx.ellipse(62,555,25,43,-.48,0,6.28);ctx.fill();ctx.beginPath();ctx.ellipse(338,555,25,43,.48,0,6.28);ctx.fill();
+  ctx.shadowBlur=0;ctx.strokeStyle='#647da8';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(48,540);ctx.lineTo(68,565);ctx.moveTo(352,540);ctx.lineTo(332,565);ctx.stroke();
+  // Cockpit dashboard.
+  ctx.fillStyle='#0b1029';ctx.beginPath();ctx.moveTo(104,600);ctx.lineTo(132,557);ctx.quadraticCurveTo(200,535,268,557);ctx.lineTo(296,600);ctx.closePath();ctx.fill();
+  ctx.strokeStyle='#4de1ff';ctx.lineWidth=2;ctx.shadowColor='#4de1ff';ctx.shadowBlur=12;ctx.beginPath();ctx.moveTo(128,577);ctx.quadraticCurveTo(200,550,272,577);ctx.stroke();ctx.shadowBlur=0;
+  ctx.fillStyle='#ffd166';ctx.font='800 10px Vazirmatn,Tahoma';ctx.textAlign='center';ctx.fillText('ASTRONAUT FLIGHT SYSTEM',200,589);
+  // Aim reticle follows the player's touch/mouse position.
+  const rx=200+(S.x-200)*.45,ry=Math.max(145,Math.min(500,150+(S.y-300)*.55));
+  ctx.strokeStyle='#9af5ff';ctx.lineWidth=1.5;ctx.shadowColor='#4de1ff';ctx.shadowBlur=10;ctx.beginPath();ctx.arc(rx,ry,12,0,6.28);ctx.moveTo(rx-20,ry);ctx.lineTo(rx-7,ry);ctx.moveTo(rx+7,ry);ctx.lineTo(rx+20,ry);ctx.moveTo(rx,ry-20);ctx.lineTo(rx,ry-7);ctx.moveTo(rx,ry+7);ctx.lineTo(rx,ry+20);ctx.stroke();ctx.shadowBlur=0;
+  if(S.sh){ctx.strokeStyle='#7dffb0';ctx.lineWidth=3;ctx.shadowColor='#7dffb0';ctx.shadowBlur=18;ctx.beginPath();ctx.arc(200,350,210,Math.PI*1.08,Math.PI*1.92);ctx.stroke();ctx.shadowBlur=0}
+  ctx.restore();ctx.textAlign='center';ctx.font='800 20px Vazirmatn,Tahoma';
   if(S.cmb>=5){ctx.fillStyle='#ffd166';ctx.fillText('کمبو ×'+fa(1+Math.min(4,Math.floor(S.cmb/5))),W/2,34)}
   if(S.mt>0){ctx.globalAlpha=Math.min(1,S.mt);ctx.fillStyle='#fff';ctx.fillText(S.msg,W/2,260);ctx.globalAlpha=1}
 }
@@ -163,7 +195,10 @@ addEventListener('keydown',e=>{keys[e.key]=1;if(e.key.startsWith('Arrow'))e.prev
 addEventListener('keyup',e=>{keys[e.key]=0});
 document.getElementById('go').onclick=()=>{reset();tx=W/2;ty=500;run=true;document.getElementById('ov').hidden=true;hud()};
 document.getElementById('mu').onclick=function(){mute=!mute;this.textContent=mute?'🔇':'🔊'};
-reset();requestAnimationFrame(loop);
+reset();
+if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}))}
+let deferredInstall=null;window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstall=e;const b=document.createElement("button");b.className="mb";b.id="install";b.textContent="📲 نصب بازی";document.querySelector(".hud").appendChild(b);b.onclick=async()=>{if(!deferredInstall)return;deferredInstall.prompt();await deferredInstall.userChoice;deferredInstall=null;b.remove()}});
+requestAnimationFrame(loop);
 </script>
 </body>
 </html>
