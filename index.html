@@ -9,14 +9,17 @@
 <meta name="google-site-verification" content="cSaWu3M_2rWf5j5DWlICTHMQIQYPraHVjUWHO9OSww4">
 <link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#0d0b2b">
+<link rel="canonical" href="https://jafarisadra123-droid.github.io/galaxy_war/">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://jafarisadra123-droid.github.io/galaxy_war/">
+<meta property="og:locale" content="fa_IR">
 <meta property="og:title" content="نبرد کهکشانی | بازی آنلاین فضایی رایگان">
 <meta property="og:description" content="شوتر فضایی سریع با باس، پاور‌آپ و رکورد. همین الان بازی کن.">
 <meta name="twitter:card" content="summary">
-<!-- بعد از آپلود روی دامنه‌ی خودت این خط را فعال کن:
-<link rel="canonical" href="https://YOUR-DOMAIN/">
-<meta property="og:url" content="https://YOUR-DOMAIN/"> -->
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"نبرد کهکشانی","description":"بازی شوتر فضایی آنلاین و رایگان با باس و پاور‌آپ","genre":"Shooter","inLanguage":"fa","applicationCategory":"Game","operatingSystem":"Any (Web browser)","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<meta name="twitter:title" content="نبرد کهکشانی | بازی آنلاین فضایی رایگان">
+<meta name="twitter:description" content="یک بازی شوتر فضایی رایگان در مرورگر؛ سفینه انتخاب کن، با دشمنان و باس‌ها بجنگ و رکورد بزن.">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"نبرد کهکشانی","description":"بازی شوتر فضایی آنلاین و رایگان با باس و پاور‌آپ","genre":"Shooter","inLanguage":"fa","applicationCategory":"Game","operatingSystem":"Any (Web browser)","url":"https://jafarisadra123-droid.github.io/galaxy_war/","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;800&display=swap">
 <style>
 :root{--bg:#eceaf7;--fg:#1b1850;--card:#fff;--muted:#5b5894;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -31,7 +34,7 @@ body{margin:0;min-height:100vh;background:var(--bg);color:var(--fg);font-family:
 canvas{width:100%;height:100%;display:block}
 .overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;background:rgba(13,11,43,.84);color:#f1efff;padding:24px}
 .overlay[hidden]{display:none}
-.overlay h1{margin:0;font-size:2.2rem;font-weight:800;color:#ffd166;text-shadow:0 0 24px rgba(255,209,102,.6)}
+.overlay h2{margin:0;font-size:2.2rem;font-weight:800;color:#ffd166;text-shadow:0 0 24px rgba(255,209,102,.6)}
 .overlay p{margin:0;max-width:30ch;line-height:1.9;color:#cfcdf5}
 button{font:inherit;font-weight:800;font-size:1.1rem;padding:12px 34px;border:0;border-radius:999px;background:#4de1ff;color:#0d0b2b;cursor:pointer;box-shadow:0 0 24px rgba(77,225,255,.6)}
 button.mb{padding:4px 12px;font-size:1.1rem;background:var(--card);color:var(--fg);box-shadow:none}
@@ -52,7 +55,7 @@ button:focus-visible{outline:3px solid #ffd166;outline-offset:3px}
 <div class="stage">
   <canvas id="c" width="400" height="600"></canvas>
   <div class="overlay" id="ov">
-    <h1 id="ttl"> space war</h1>
+    <h2 id="ttl">نبرد کهکشانی</h2>
     <p id="msg">سفینه را با انگشت، ماوس یا کلیدهای جهتی حرکت بده. شلیک خودکار است. باس‌ها را نابود کن و رکورد بزن.</p>
     <div class="ship-picker"><button class="ship-choice active" data-ship="0">⚡ شکاری</button><button class="ship-choice" data-ship="1">🛡 زرهی</button><button class="ship-choice" data-ship="2">🚀 سایه</button></div><button id="go">شروع نبرد</button>
   </div>
