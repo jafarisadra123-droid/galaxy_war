@@ -1,0 +1,107 @@
+name: Build Android Release APK
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-release-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout game
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Prepare web app
+        run: |
+          mkdir -p www
+          cp index.html icon.svg manifest.webmanifest sw.js www/
+          cat > package.json <<'EOF'
+          {
+            "name": "galaxy-war-android",
+            "version": "1.0.0",
+            "private": true,
+            "description": "Galaxy War Android wrapper",
+            "dependencies": {
+              "@capacitor/core": "^6.2.1",
+              "@capacitor/android": "^6.2.1"
+            },
+            "devDependencies": {
+              "@capacitor/cli": "^6.2.1"
+            }
+          }
+          EOF
+          cat > capacitor.config.json <<'EOF'
+          {
+            "appId": "com.galaxywar.game",
+            "appName": "نبرد کهکشانی",
+            "webDir": "www",
+            "bundledWebRuntime": false
+          }
+          EOF
+          npm install
+
+      - name: Add Android platform
+        run: npx cap add android
+
+      - name: Sync Android project
+        run: npx cap sync android
+
+      - name: Build unsigned release APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleRelease
+
+      - name: Check signing secrets
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          test -n "$KEYSTORE_B64" || (echo "Missing ANDROID_KEYSTORE_BASE64" && exit 1)
+          test -n "$KEYSTORE_PASSWORD" || (echo "Missing ANDROID_KEYSTORE_PASSWORD" && exit 1)
+          test -n "$KEY_ALIAS" || (echo "Missing ANDROID_KEY_ALIAS" && exit 1)
+          test -n "$KEY_PASSWORD" || (echo "Missing ANDROID_KEY_PASSWORD" && exit 1)
+
+      - name: Align and sign release APK
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          echo "$KEYSTORE_B64" | base64 --decode > galaxy-war-release.jks
+          UNSIGNED="android/app/build/outputs/apk/release/app-release-unsigned.apk"
+          BUILD_TOOLS="$(find "$ANDROID_HOME/build-tools" -mindepth 1 -maxdepth 1 -type d | sort -V | tail -n 1)"
+          "$BUILD_TOOLS/zipalign" -v -p 4 "$UNSIGNED" galaxy-war-release-aligned.apk
+          "$BUILD_TOOLS/apksigner" sign \
+            --ks galaxy-war-release.jks \
+            --ks-key-alias "$KEY_ALIAS" \
+            --ks-pass env:KEYSTORE_PASSWORD \
+            --key-pass env:KEY_PASSWORD \
+            --out galaxy-war-release.apk \
+            galaxy-war-release-aligned.apk
+          "$BUILD_TOOLS/apksigner" verify --verbose galaxy-war-release.apk
+          rm -f galaxy-war-release.jks galaxy-war-release-aligned.apk
+
+      - name: Upload signed release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: galaxy-war-release-apk
+          path: galaxy-war-release.apk
+          if-no-files-found: error
+          retention-days: 30
